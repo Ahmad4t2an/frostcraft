@@ -120,17 +120,15 @@ function MenuProductCard({ product, onAdd }: { product: Product; onAdd: (p: Prod
       {product.badge && <span className="absolute left-4 top-4 rounded-full bg-[hsl(var(--brand-pink)/.94)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-[hsl(var(--brand-ink))]">{product.badge}</span>}
       <span className="absolute bottom-4 right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"><ArrowRight size={17}/></span>
     </Link>
-    <div className="p-4 sm:p-5">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="text-[10px] font-bold uppercase tracking-[.15em] text-muted-foreground">{product.category}</p>
-          <Link href={`/product/${product.id}`} className="mt-1 block truncate font-display text-xl text-foreground transition-colors hover:text-primary" data-testid={`link-menu-product-title-${product.id}`}>{product.name}</Link>
-          <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
-        </div>
-        <p className="shrink-0 font-semibold text-primary">{money(product.price)}</p>
+    <div className="p-3 sm:p-5">
+      <p className="truncate text-[9px] font-bold uppercase tracking-[.1em] text-muted-foreground sm:text-[10px] sm:tracking-[.15em]">{product.category}</p>
+      <div className="mt-1 flex items-start justify-between gap-2">
+        <Link href={`/product/${product.id}`} className="min-w-0 truncate font-display text-base leading-tight text-foreground transition-colors hover:text-primary sm:text-xl" data-testid={`link-menu-product-title-${product.id}`}>{product.name}</Link>
+        <p className="shrink-0 text-xs font-semibold text-primary sm:text-base">{money(product.price)}</p>
       </div>
-      <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-        <span className="flex items-center gap-1 text-xs text-[hsl(var(--brand-ink)/.7)]"><Star size={13} fill="currentColor" className="text-accent"/> 4.9 <span className="text-muted-foreground">· {product.serves}</span></span>
+      <p className="mt-1 hidden line-clamp-2 text-sm leading-6 text-muted-foreground sm:block">{product.description}</p>
+      <div className="mt-3 flex flex-col items-start gap-2 border-t border-border pt-3 sm:mt-4 sm:flex-row sm:items-center sm:justify-between sm:pt-4">
+        <span className="flex items-center gap-1 text-[10px] text-[hsl(var(--brand-ink)/.7)] sm:text-xs"><Star size={12} fill="currentColor" className="text-accent"/> 4.9 <span className="text-muted-foreground">· {product.serves}</span></span>
         <button onClick={() => onAdd(product)} className="flex items-center gap-1 text-xs font-bold uppercase tracking-[.1em] text-primary transition-colors hover:text-foreground" data-testid={`button-menu-add-${product.id}`}>Add <Plus size={14}/></button>
       </div>
     </div>
@@ -163,13 +161,13 @@ function MenuPage({ onAdd }: { onAdd: (p: Product) => void }) {
       <div><p className="eyebrow mb-3">The menu</p><h1 className="font-display text-5xl leading-none text-primary sm:text-7xl">Find your<br/><em className="font-normal text-foreground">sweet spot.</em></h1></div>
       <p className="max-w-sm text-sm leading-6 text-muted-foreground md:text-right">Small-batch cakes, tarts, and tiny treats made for birthdays, beginnings, and everything worth celebrating.</p>
     </div>
-    <div className="mt-8 grid gap-8 lg:grid-cols-[190px_1fr] lg:gap-10">
-      <aside className="h-fit rounded-2xl border border-border bg-background p-4 shadow-[0_8px_24px_hsl(var(--brand-ink)/.04)] lg:sticky lg:top-24" aria-label="Product categories">
-        <p className="px-2 pb-3 text-[10px] font-bold uppercase tracking-[.2em] text-muted-foreground">Categories</p>
-        <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col lg:gap-1">
+    <div className="mt-8 grid grid-cols-[88px_minmax(0,1fr)] items-start gap-2 sm:grid-cols-[142px_minmax(0,1fr)] sm:gap-5 lg:grid-cols-[190px_1fr] lg:gap-10">
+      <aside className="sticky top-24 h-fit rounded-2xl border border-border bg-background p-1.5 shadow-[0_8px_24px_hsl(var(--brand-ink)/.04)] sm:p-3 lg:p-4" aria-label="Product categories">
+        <p className="px-1 pb-3 text-[9px] font-bold uppercase tracking-[.16em] text-muted-foreground sm:px-2 sm:text-[10px] sm:tracking-[.2em]">Categories</p>
+        <div className="flex flex-col gap-1">
           {categories.map(c => {
             const count = c === 'All' ? products.length : products.filter(p => p.category === c).length;
-            return <button key={c} onClick={() => setCategory(c)} className={cn('flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition-all lg:gap-6', category === c ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-secondary/70 hover:text-primary')} data-testid={`button-filter-${c.toLowerCase().replaceAll(' ', '-')}`}><span className="truncate">{c === 'All' ? 'All products' : c}</span><span className={cn('text-[10px]', category === c ? 'text-primary-foreground/70' : 'text-muted-foreground/70')}>{count}</span></button>;
+            return <button key={c} onClick={() => setCategory(c)} className={cn('flex w-full items-center justify-between gap-1 rounded-lg px-2 py-2 text-left text-[10px] font-bold leading-tight transition-all sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs lg:gap-6', category === c ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-secondary/70 hover:text-primary')} data-testid={`button-filter-${c.toLowerCase().replaceAll(' ', '-')}`}><span className="min-w-0 truncate">{c === 'All' ? 'All products' : c}</span><span className={cn('shrink-0 text-[9px] sm:text-[10px]', category === c ? 'text-primary-foreground/70' : 'text-muted-foreground/70')}>{count}</span></button>;
           })}
         </div>
       </aside>
@@ -178,7 +176,7 @@ function MenuPage({ onAdd }: { onAdd: (p: Product) => void }) {
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-secondary/60 px-3.5 py-2 text-xs font-bold text-foreground"><span className="h-1.5 w-1.5 rounded-full bg-primary"/>{category === 'All' ? 'All products' : category}<span className="text-muted-foreground">· {filtered.length}</span></div>
           <label className="flex w-full items-center gap-3 rounded-full border border-border bg-background px-4 py-2.5 shadow-sm transition-colors focus-within:border-primary sm:w-56"><Search size={16} className="shrink-0 text-muted-foreground"/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search cakes" className="w-full bg-transparent text-sm outline-none" data-testid="input-search-menu"/></label>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{filtered.map(p => <MenuProductCard key={p.id} product={p} onAdd={onAdd}/>)}</div>
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">{filtered.map(p => <MenuProductCard key={p.id} product={p} onAdd={onAdd}/>)}</div>
         {filtered.length === 0 && <div className="rounded-2xl border border-dashed border-border py-28 text-center"><CakeSlice className="mx-auto mb-5 text-primary/50" size={35}/><h2 className="font-display text-3xl">Nothing in that little corner.</h2><p className="mt-3 text-muted-foreground">Try another search or browse the whole menu.</p><button onClick={() => { setQuery(''); setCategory('All'); }} className="mt-6 text-sm font-bold text-primary underline underline-offset-4" data-testid="button-clear-search">Clear filters</button></div>}
       </section>
     </div>
