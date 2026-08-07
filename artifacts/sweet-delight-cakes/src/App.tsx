@@ -57,23 +57,22 @@ function useStoredCart() {
 function Header({ count }: { count: number }) {
   const [open, setOpen] = useState(false);
   const [location] = useLocation();
-  return <header className="sticky top-0 z-40 border-b border-[hsl(var(--border)/.7)] bg-[hsl(var(--background)/.9)] backdrop-blur-xl">
+  return <header className="sticky top-0 z-40 border-b border-[hsl(var(--brand-ink)/.12)] bg-[hsl(var(--brand-pink))] shadow-[0_2px_18px_hsl(var(--brand-ink)/.08)]">
     <div className="section-wrap flex h-[76px] items-center justify-between">
       <Link href="/" className="group flex items-center gap-3" data-testid="link-logo">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground"><CakeSlice size={20}/></span>
-        <span><span className="block font-display text-xl leading-none text-primary">Sweet Delight</span><span className="mt-1 block text-[9px] font-bold uppercase tracking-[.24em] text-muted-foreground">Cakes & confections</span></span>
+        <img src="/sweet-delight-logo.png" alt="Frost Craft — Delight in every bite" className="h-auto w-[148px] object-contain transition-transform duration-300 group-hover:scale-[1.02] sm:w-[164px]" />
       </Link>
       <nav className="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Main navigation">
-        {['Menu', 'Our story', 'Contact'].map((item) => <Link key={item} href={item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact'} className={cn('link-underline text-foreground/75 transition-colors hover:text-primary', location === (item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact') && 'text-primary')} data-testid={`link-nav-${item.toLowerCase().replace(' ', '-')}`}>{item}</Link>)}
+        {['Menu', 'Our story', 'Contact'].map((item) => <Link key={item} href={item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact'} className={cn('link-underline text-[hsl(var(--brand-ink)/.75)] transition-colors hover:text-[hsl(var(--brand-ink))]', location === (item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact') && 'text-[hsl(var(--brand-ink))]')} data-testid={`link-nav-${item.toLowerCase().replace(' ', '-')}`}>{item}</Link>)}
       </nav>
       <div className="flex items-center gap-2">
-        <Link href="/menu" className="hidden rounded-full p-3 text-foreground/70 transition-colors hover:bg-secondary hover:text-primary sm:block" data-testid="link-search"><Search size={19}/></Link>
-        <Link href="/cart" className="relative rounded-full p-3 text-foreground/70 transition-colors hover:bg-secondary hover:text-primary" data-testid="link-cart"><ShoppingBag size={19}/>{count > 0 && <span className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold">{count}</span>}</Link>
-        <button className="rounded-full p-3 md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" data-testid="button-mobile-menu">{open ? <X size={20}/> : <MenuIcon size={20}/>}</button>
+        <Link href="/menu" className="hidden rounded-full p-3 text-[hsl(var(--brand-ink)/.7)] transition-colors hover:bg-[hsl(var(--brand-ink)/.08)] hover:text-[hsl(var(--brand-ink))] sm:block" data-testid="link-search"><Search size={19}/></Link>
+        <Link href="/cart" className="relative rounded-full p-3 text-[hsl(var(--brand-ink)/.7)] transition-colors hover:bg-[hsl(var(--brand-ink)/.08)] hover:text-[hsl(var(--brand-ink))]" data-testid="link-cart"><ShoppingBag size={19}/>{count > 0 && <span className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(var(--brand-ink))] px-1 text-[10px] font-bold text-[hsl(var(--brand-pink))]">{count}</span>}</Link>
+        <button className="rounded-full p-3 text-[hsl(var(--brand-ink))] md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" data-testid="button-mobile-menu">{open ? <X size={20}/> : <MenuIcon size={20}/>}</button>
       </div>
     </div>
-    {open && <nav className="border-t border-border bg-background px-5 py-5 md:hidden" aria-label="Mobile navigation">
-      <div className="section-wrap flex flex-col gap-5 text-lg font-display">
+    {open && <nav className="border-t border-[hsl(var(--brand-ink)/.12)] bg-[hsl(var(--brand-pink))] px-5 py-5 md:hidden" aria-label="Mobile navigation">
+      <div className="section-wrap flex flex-col gap-5 text-lg font-display text-[hsl(var(--brand-ink))]">
         <Link href="/menu" onClick={() => setOpen(false)} data-testid="link-mobile-menu">The menu</Link><Link href="/about" onClick={() => setOpen(false)} data-testid="link-mobile-about">Our story</Link><Link href="/contact" onClick={() => setOpen(false)} data-testid="link-mobile-contact">Come say hello</Link>
       </div>
     </nav>}
@@ -81,14 +80,14 @@ function Header({ count }: { count: number }) {
 }
 
 function Footer() {
-  return <footer className="mt-24 bg-primary px-5 py-14 text-primary-foreground">
+  return <footer className="mt-24 bg-[hsl(var(--brand-pink))] px-5 py-14 text-[hsl(var(--brand-ink))]">
     <div className="section-wrap grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1.3fr]">
-      <div><div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-foreground"><CakeSlice size={17}/></span><span className="font-display text-xl">Sweet Delight</span></div><p className="max-w-xs text-sm leading-7 text-primary-foreground/70">Beautiful cakes for the moments that become stories.</p></div>
-      <div><p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-accent">Explore</p><div className="flex flex-col gap-3 text-sm text-primary-foreground/75"><Link href="/menu" data-testid="link-footer-menu">The menu</Link><Link href="/about" data-testid="link-footer-about">Our story</Link><Link href="/contact" data-testid="link-footer-contact">Contact</Link></div></div>
-      <div><p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-accent">Visit us</p><p className="text-sm leading-7 text-primary-foreground/75">18 Willow Lane<br/>Brooklyn, NY 11211<br/><br/>Tue–Sat, 9am–6pm</p></div>
-      <div><p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-accent">Stay in the know</p><p className="mb-4 text-sm leading-6 text-primary-foreground/75">Seasonal drops, studio notes, and a little sweetness.</p><form className="flex border-b border-primary-foreground/30 pb-2" onSubmit={(e) => { e.preventDefault(); toast.success('Welcome to the sweet side.'); }}><input aria-label="Email address" data-testid="input-footer-email" placeholder="Your email address" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-primary-foreground/45"/><button aria-label="Subscribe" data-testid="button-footer-subscribe"><ArrowRight size={18}/></button></form></div>
+      <div><div className="mb-5"><img src="/sweet-delight-logo.png" alt="Frost Craft — Delight in every bite" className="h-auto w-[210px] object-contain object-left" /></div><p className="max-w-xs text-sm leading-7 text-[hsl(var(--brand-ink)/.72)]">Beautiful cakes for the moments that become stories.</p></div>
+      <div><p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-[hsl(var(--brand-ink))]">Explore</p><div className="flex flex-col gap-3 text-sm text-[hsl(var(--brand-ink)/.75)]"><Link href="/menu" data-testid="link-footer-menu">The menu</Link><Link href="/about" data-testid="link-footer-about">Our story</Link><Link href="/contact" data-testid="link-footer-contact">Contact</Link></div></div>
+      <div><p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-[hsl(var(--brand-ink))]">Visit us</p><p className="text-sm leading-7 text-[hsl(var(--brand-ink)/.75)]">18 Willow Lane<br/>Brooklyn, NY 11211<br/><br/>Tue–Sat, 9am–6pm</p></div>
+      <div><p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-[hsl(var(--brand-ink))]">Stay in the know</p><p className="mb-4 text-sm leading-6 text-[hsl(var(--brand-ink)/.75)]">Seasonal drops, studio notes, and a little sweetness.</p><form className="flex border-b border-[hsl(var(--brand-ink)/.3)] pb-2" onSubmit={(e) => { e.preventDefault(); toast.success('Welcome to the sweet side.'); }}><input aria-label="Email address" data-testid="input-footer-email" placeholder="Your email address" className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[hsl(var(--brand-ink)/.45)]"/><button aria-label="Subscribe" data-testid="button-footer-subscribe"><ArrowRight size={18}/></button></form></div>
     </div>
-    <div className="section-wrap mt-14 flex flex-col justify-between gap-3 border-t border-primary-foreground/15 pt-5 text-xs text-primary-foreground/45 sm:flex-row"><span>© 2024 Sweet Delight Cakes</span><span>Made slowly, shared gladly.</span></div>
+    <div className="section-wrap mt-14 flex flex-col justify-between gap-3 border-t border-[hsl(var(--brand-ink)/.15)] pt-5 text-xs text-[hsl(var(--brand-ink)/.5)] sm:flex-row"><span>© 2024 Sweet Delight Cakes</span><span>Made slowly, shared gladly.</span></div>
   </footer>;
 }
 
