@@ -110,12 +110,14 @@ function Header({ count }: { count: number }) {
       <div className="flex items-center gap-2">
         <Link href="/menu" className="hidden rounded-full p-3 text-[hsl(var(--brand-ink)/.7)] transition-colors hover:bg-[hsl(var(--brand-ink)/.08)] hover:text-[hsl(var(--brand-ink))] sm:block" data-testid="link-search"><Search size={19}/></Link>
         <Link href="/cart" className="relative rounded-full p-3 text-[hsl(var(--brand-ink)/.7)] transition-colors hover:bg-[hsl(var(--brand-ink)/.08)] hover:text-[hsl(var(--brand-ink))]" data-testid="link-cart"><ShoppingBag size={19}/>{count > 0 && <span className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-full bg-[hsl(var(--brand-ink))] px-1 text-[10px] font-bold text-[hsl(var(--brand-pink))]">{count}</span>}</Link>
+        <Link href="/menu" className="button-shine ml-2 hidden items-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform hover:-translate-y-0.5 sm:flex" data-testid="link-get-quote">Order Now</Link>
         <button className="rounded-full p-3 text-[hsl(var(--brand-ink))] md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" data-testid="button-mobile-menu">{open ? <X size={20}/> : <MenuIcon size={20}/>}</button>
       </div>
     </div>
     {open && <nav className="border-t border-[hsl(var(--brand-ink)/.12)] bg-[hsl(var(--brand-pink))] px-5 py-5 md:hidden" aria-label="Mobile navigation">
       <div className="section-wrap flex flex-col gap-5 text-lg font-display text-[hsl(var(--brand-ink))]">
         <Link href="/" onClick={() => setOpen(false)} data-testid="link-mobile-home">Home</Link><Link href="/menu" onClick={() => setOpen(false)} data-testid="link-mobile-menu">The menu</Link><Link href="/about" onClick={() => setOpen(false)} data-testid="link-mobile-about">Our story</Link><Link href="/contact" onClick={() => setOpen(false)} data-testid="link-mobile-contact">Come say hello</Link>
+        <Link href="/menu" onClick={() => setOpen(false)} className="button-shine inline-flex w-fit items-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground" data-testid="link-mobile-get-quote">Order Now</Link>
       </div>
     </nav>}
   </header>;
@@ -198,9 +200,26 @@ function MenuProductCard({ product, onAdd }: { product: Product; onAdd: (p: Prod
 
 function Home({ onAdd }: { onAdd: (p: Product) => void }) {
   return <main>
-    <section className="relative overflow-hidden">
-      <img src="/hero-banner-desktop.png" alt="Life is Sweet, Celebrate it! Deliciously handcrafted cakes for every occasion." className="hidden w-full md:block" data-testid="img-hero-banner-desktop"/>
-      <img src="/hero-banner-mobile.png" alt="Life is Sweet, Celebrate it! Deliciously handcrafted cakes for every occasion." className="block w-full md:hidden" data-testid="img-hero-banner-mobile"/>
+    <section className="relative overflow-hidden bg-secondary/50">
+      <div className="pointer-events-none absolute -left-20 top-1/3 h-72 w-72 rounded-full bg-accent/20 blur-[100px]"/>
+      <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-accent/15 blur-[110px]"/>
+      <div className="section-wrap grid min-h-[600px] items-center gap-10 py-16 md:grid-cols-[1fr_1fr] md:py-20">
+        <div className="relative z-10 reveal">
+          <p className="font-display text-[clamp(2.6rem,6vw,4.6rem)] italic leading-[1] text-primary" style={{fontFamily:"'Brush Script MT', cursive"}}>Life is Sweet,</p>
+          <h1 className="mt-1 font-display text-[clamp(3.1rem,7vw,5.8rem)] font-extrabold uppercase leading-[.95] tracking-[-.02em] text-foreground">Cake<br/>Craft</h1>
+          <p className="mt-7 max-w-sm text-base leading-7 text-muted-foreground">Hand-finished cakes and confections for the birthdays, beginnings, and very good Tuesdays worth celebrating.</p>
+          <div className="mt-9 flex flex-wrap items-center gap-5">
+            <Link href="/menu" className="button-shine inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground transition-transform hover:-translate-y-0.5" data-testid="link-hero-menu">Explore the menu <ArrowRight size={17}/></Link>
+            <Link href="/about" className="link-underline text-sm font-bold text-foreground" data-testid="link-hero-story">Our story</Link>
+          </div>
+        </div>
+        <div className="relative reveal reveal-delay-2 flex justify-center">
+          <div className="pointer-events-none absolute inset-0 m-auto h-[85%] w-[85%] rounded-full bg-accent/25 blur-[70px]"/>
+          <div className="relative overflow-hidden rounded-[2rem] rounded-br-[6rem] shadow-[0_20px_50px_hsl(var(--brand-ink)/.25)]"><img src="/pink-and-gold-floral-cake.jpg" alt="Rose gold celebration cake" className="aspect-[1.03] w-full max-w-md object-cover"/></div>
+          <div className="absolute -right-3 -top-4 z-10 flex h-24 w-24 animate-[drift_5s_ease-in-out_infinite] items-center justify-center rounded-full bg-accent text-center font-display text-sm leading-tight text-foreground md:-right-6 md:top-0">baked<br/>with<br/>heart</div>
+        </div>
+      </div>
+      <button className="absolute bottom-8 right-8 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-background text-primary shadow-md transition-colors hover:bg-primary hover:text-primary-foreground" aria-label="Next slide" data-testid="button-hero-next"><ChevronRight size={20}/></button>
     </section>
     <section className="section-wrap py-24 md:py-32"><div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><SectionHeading eyebrow="The favourites" title="The ones that make people linger." copy="Our most-loved bakes, made in small batches and finished by hand."/><Link href="/menu" className="link-underline flex items-center gap-2 text-sm font-bold text-primary" data-testid="link-view-all-products">See everything <ArrowRight size={16}/></Link></div><div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{products.slice(0,4).map((p) => <ProductCard key={p.id} product={p} onAdd={onAdd}/>)}</div></section>
     <section className="bg-primary py-24 text-primary-foreground md:py-32"><div className="section-wrap grid items-center gap-14 md:grid-cols-[1fr_1fr]"><div><p className="eyebrow mb-5 text-accent">Why Sweet Delight</p><h2 className="font-display text-4xl leading-tight sm:text-5xl">The details are<br/><em className="font-normal text-accent">the whole point.</em></h2><p className="mt-6 max-w-md text-base leading-7 text-primary-foreground/70">No shortcuts, no crowded counters. Just thoughtful ingredients, a quiet studio, and a team who believes dessert should feel like a gift.</p><Link href="/about" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-accent" data-testid="link-why-about">Meet the makers <ArrowRight size={16}/></Link></div><div className="grid grid-cols-2 gap-x-8 gap-y-10 border-l border-primary-foreground/20 pl-8"><div><Sparkles className="mb-4 text-accent" size={22}/><h3 className="font-display text-xl">Small batch</h3><p className="mt-2 text-sm leading-6 text-primary-foreground/60">Baked fresh, never waiting in a warehouse.</p></div><div><Heart className="mb-4 text-accent" size={22}/><h3 className="font-display text-xl">Made personal</h3><p className="mt-2 text-sm leading-6 text-primary-foreground/60">A little room for your story in every order.</p></div><div><PackageCheck className="mb-4 text-accent" size={22}/><h3 className="font-display text-xl">Boxed beautifully</h3><p className="mt-2 text-sm leading-6 text-primary-foreground/60">The unboxing is part of the celebration.</p></div><div><Truck className="mb-4 text-accent" size={22}/><h3 className="font-display text-xl">Right on time</h3><p className="mt-2 text-sm leading-6 text-primary-foreground/60">Carefully delivered across the city.</p></div></div></div></section>
