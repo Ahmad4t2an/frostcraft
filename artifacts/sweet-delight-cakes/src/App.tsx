@@ -63,7 +63,7 @@ function Header({ count }: { count: number }) {
         <img src="/sweet-delight-header-logo.png" alt="Frost Craft — Delight in every bite" className="block h-auto max-h-[62px] w-[164px] object-contain transition-transform duration-300 group-hover:scale-[1.02] sm:w-[184px]" />
       </Link>
       <nav className="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Main navigation">
-        {['Menu', 'Our story', 'Contact'].map((item) => <Link key={item} href={item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact'} className={cn('link-underline text-[hsl(var(--brand-ink)/.75)] transition-colors hover:text-[hsl(var(--brand-ink))]', location === (item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact') && 'text-[hsl(var(--brand-ink))]')} data-testid={`link-nav-${item.toLowerCase().replace(' ', '-')}`}>{item}</Link>)}
+        {[['Home', '/'], ['Menu', '/menu'], ['Our story', '/about'], ['Contact', '/contact']].map(([item, href]) => <Link key={item} href={href} className={cn('link-underline text-[hsl(var(--brand-ink)/.75)] transition-colors hover:text-[hsl(var(--brand-ink))]', location === href && 'text-[hsl(var(--brand-ink))]')} data-testid={`link-nav-${item.toLowerCase().replace(' ', '-')}`}>{item}</Link>)}
       </nav>
       <div className="flex items-center gap-2">
         <Link href="/menu" className="hidden rounded-full p-3 text-[hsl(var(--brand-ink)/.7)] transition-colors hover:bg-[hsl(var(--brand-ink)/.08)] hover:text-[hsl(var(--brand-ink))] sm:block" data-testid="link-search"><Search size={19}/></Link>
@@ -73,7 +73,7 @@ function Header({ count }: { count: number }) {
     </div>
     {open && <nav className="border-t border-[hsl(var(--brand-ink)/.12)] bg-[hsl(var(--brand-pink))] px-5 py-5 md:hidden" aria-label="Mobile navigation">
       <div className="section-wrap flex flex-col gap-5 text-lg font-display text-[hsl(var(--brand-ink))]">
-        <Link href="/menu" onClick={() => setOpen(false)} data-testid="link-mobile-menu">The menu</Link><Link href="/about" onClick={() => setOpen(false)} data-testid="link-mobile-about">Our story</Link><Link href="/contact" onClick={() => setOpen(false)} data-testid="link-mobile-contact">Come say hello</Link>
+        <Link href="/" onClick={() => setOpen(false)} data-testid="link-mobile-home">Home</Link><Link href="/menu" onClick={() => setOpen(false)} data-testid="link-mobile-menu">The menu</Link><Link href="/about" onClick={() => setOpen(false)} data-testid="link-mobile-about">Our story</Link><Link href="/contact" onClick={() => setOpen(false)} data-testid="link-mobile-contact">Come say hello</Link>
       </div>
     </nav>}
   </header>;
@@ -166,10 +166,10 @@ function MenuPage({ onAdd }: { onAdd: (p: Product) => void }) {
     <div className="mt-8 grid gap-8 lg:grid-cols-[190px_1fr] lg:gap-10">
       <aside className="h-fit rounded-2xl border border-border bg-background p-4 shadow-[0_8px_24px_hsl(var(--brand-ink)/.04)] lg:sticky lg:top-24" aria-label="Product categories">
         <p className="px-2 pb-3 text-[10px] font-bold uppercase tracking-[.2em] text-muted-foreground">Categories</p>
-        <div className="flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
+        <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-col lg:gap-1">
           {categories.map(c => {
             const count = c === 'All' ? products.length : products.filter(p => p.category === c).length;
-            return <button key={c} onClick={() => setCategory(c)} className={cn('flex min-w-max items-center justify-between gap-6 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition-all lg:w-full', category === c ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-secondary/70 hover:text-primary')} data-testid={`button-filter-${c.toLowerCase().replaceAll(' ', '-')}`}><span>{c === 'All' ? 'All products' : c}</span><span className={cn('text-[10px]', category === c ? 'text-primary-foreground/70' : 'text-muted-foreground/70')}>{count}</span></button>;
+            return <button key={c} onClick={() => setCategory(c)} className={cn('flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition-all lg:gap-6', category === c ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-secondary/70 hover:text-primary')} data-testid={`button-filter-${c.toLowerCase().replaceAll(' ', '-')}`}><span className="truncate">{c === 'All' ? 'All products' : c}</span><span className={cn('text-[10px]', category === c ? 'text-primary-foreground/70' : 'text-muted-foreground/70')}>{count}</span></button>;
           })}
         </div>
       </aside>
