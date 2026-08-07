@@ -1,0 +1,67 @@
+Create a visually stunning, fully responsive FRONTEND-ONLY website for a premium cake shop/bakery called "Sweet Delight Cakes" (frontend only, no backend, no real payment processing — just UI/UX for a payment page).
+
+GENERAL STYLE:
+- Warm, elegant, dessert-themed color palette (soft pinks, cream, chocolate brown, gold accents)
+- Modern, clean typography with a playful cursive font for headings
+- Smooth scroll animations, fade-ins, hover effects, and parallax sections
+- Fully responsive for mobile, tablet, and desktop
+- Rounded cards, soft shadows, and subtle micro-interactions on buttons/icons
+- Use high-quality cake/bakery placeholder images
+
+PAGES TO INCLUDE:
+
+1. HOME PAGE
+   - Hero section with large bakery image/banner, tagline, and "Order Now" CTA button
+   - Animated scroll section showing best-selling cakes (carousel/slider)
+   - "Why Choose Us" section with icons (fresh ingredients, custom designs, fast delivery)
+   - Customer testimonials slider
+   - Instagram-style gallery grid of cakes
+   - Newsletter signup section
+   - Footer with social links, contact info, quick links
+
+2. MENU / PRODUCTS PAGE
+   - Grid layout of cakes with filters (Birthday, Wedding, Cupcakes, Custom, Eggless, etc.)
+   - Each product card: image, name, price, rating, "Add to Cart" button
+   - Hover animation showing quick view/zoom
+   - Search bar to filter cakes
+
+3. PRODUCT DETAIL PAGE
+   - Large image gallery with thumbnails
+   - Cake description, size options, flavor selection, weight selection
+   - Quantity selector and "Add to Cart" / "Buy Now" buttons
+   - Related cakes section at bottom
+
+4. ABOUT US PAGE
+   - Story of the bakery with timeline design
+   - Team section with photos and roles
+   - Fun stats section (years of experience, cakes delivered, happy customers) with animated counters
+
+5. CART PAGE
+   - List of added items with image, name, price, quantity controls, remove button
+   - Order summary sidebar with subtotal, delivery charges, total
+   - "Proceed to Checkout" button
+
+6. CHECKOUT / PAYMENT PAGE (UI ONLY)
+   - Step-by-step checkout flow (Shipping Info → Payment Method → Order Review)
+   - Payment method selection UI (Credit/Debit Card, JazzCash, EasyPaisa, Cash on Delivery) with icons
+   - Card details form with card preview animation (flip card design)
+   - Order summary on the side
+   - "Place Order" button leading to a styled confirmation page
+
+7. ORDER CONFIRMATION PAGE
+   - Success animation/checkmark
+   - Order ID, estimated delivery date
+   - "Continue Shopping" button
+
+8. CONTACT PAGE
+   - Contact form (name, email, message)
+   - Embedded map placeholder
+   - Contact info cards (address, phone, email, working hours)
+
+TECHNICAL REQUIREMENTS:
+- Use React (or HTML/CSS/JS) with Tailwind CSS for styling
+- Add smooth scroll-triggered animations (using AOS, Framer Motion, or CSS animations)
+- Sticky navbar that changes style on scroll
+- Mobile hamburger menu with smooth slide animation
+- All buttons/cards should have hover and click micro-interactions
+- Make the whole site feel premium, warm, and delicious to look at while scrolling
