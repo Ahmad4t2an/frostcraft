@@ -113,6 +113,30 @@ function ProductCard({ product, onAdd }: { product: Product; onAdd: (p: Product)
   </article>;
 }
 
+function MenuProductCard({ product, onAdd }: { product: Product; onAdd: (p: Product) => void }) {
+  return <article className="group overflow-hidden rounded-2xl border border-border bg-background shadow-[0_8px_24px_hsl(var(--brand-ink)/.04)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_16px_34px_hsl(var(--brand-ink)/.09)]" data-testid={`card-menu-product-${product.id}`}>
+    <Link href={`/product/${product.id}`} className="image-zoom relative block overflow-hidden border-b border-border bg-[#fffaf7]" data-testid={`link-menu-product-${product.id}`}>
+      <img src={product.image} alt={product.name} className="aspect-[1.12] w-full object-cover" loading="lazy"/>
+      {product.badge && <span className="absolute left-4 top-4 rounded-full bg-[hsl(var(--brand-pink)/.94)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-[hsl(var(--brand-ink))]">{product.badge}</span>}
+      <span className="absolute bottom-4 right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"><ArrowRight size={17}/></span>
+    </Link>
+    <div className="p-4 sm:p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-[10px] font-bold uppercase tracking-[.15em] text-muted-foreground">{product.category}</p>
+          <Link href={`/product/${product.id}`} className="mt-1 block truncate font-display text-xl text-foreground transition-colors hover:text-primary" data-testid={`link-menu-product-title-${product.id}`}>{product.name}</Link>
+          <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">{product.description}</p>
+        </div>
+        <p className="shrink-0 font-semibold text-primary">{money(product.price)}</p>
+      </div>
+      <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+        <span className="flex items-center gap-1 text-xs text-[hsl(var(--brand-ink)/.7)]"><Star size={13} fill="currentColor" className="text-accent"/> 4.9 <span className="text-muted-foreground">· {product.serves}</span></span>
+        <button onClick={() => onAdd(product)} className="flex items-center gap-1 text-xs font-bold uppercase tracking-[.1em] text-primary transition-colors hover:text-foreground" data-testid={`button-menu-add-${product.id}`}>Add <Plus size={14}/></button>
+      </div>
+    </div>
+  </article>;
+}
+
 function Home({ onAdd }: { onAdd: (p: Product) => void }) {
   return <main>
     <section className="relative overflow-hidden bg-secondary/50">
@@ -134,7 +158,31 @@ function MenuPage({ onAdd }: { onAdd: (p: Product) => void }) {
   const [query, setQuery] = useState(''); const [category, setCategory] = useState('All');
   const categories = ['All', 'Signature Cakes', 'Tarts & Pies', 'Gift Boxes', 'Celebration'];
   const filtered = products.filter(p => (category === 'All' || p.category === category) && `${p.name} ${p.description}`.toLowerCase().includes(query.toLowerCase()));
-  return <main className="section-wrap py-14 md:py-24"><div className="reveal"><p className="eyebrow mb-4">The menu</p><h1 className="font-display text-6xl leading-none text-primary sm:text-8xl">Made to<br/><em className="font-normal text-foreground">be remembered.</em></h1><p className="mt-7 max-w-lg text-base leading-7 text-muted-foreground">A collection of cakes, tarts, and tiny treats for every kind of gathering. Choose your favourite, or let us help you find it.</p></div><div className="mt-14 flex flex-col gap-5 border-y border-border py-5 md:flex-row md:items-center md:justify-between"><div className="flex gap-2 overflow-x-auto pb-1">{categories.map(c => <button key={c} onClick={() => setCategory(c)} className={cn('whitespace-nowrap rounded-full border px-4 py-2 text-xs font-bold transition-colors', category === c ? 'border-primary bg-primary text-primary-foreground' : 'border-border text-muted-foreground hover:border-primary hover:text-primary')} data-testid={`button-filter-${c.toLowerCase().replaceAll(' ', '-')}`}>{c}</button>)}</div><label className="flex items-center gap-3 border-b border-border pb-2 md:w-52"><Search size={17} className="text-muted-foreground"/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search bakes" className="w-full bg-transparent text-sm outline-none" data-testid="input-search-menu"/></label></div><div className="mt-12 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">{filtered.map(p => <ProductCard key={p.id} product={p} onAdd={onAdd}/>)}</div>{filtered.length === 0 && <div className="py-28 text-center"><CakeSlice className="mx-auto mb-5 text-primary/50" size={35}/><h2 className="font-display text-3xl">Nothing in that little corner.</h2><p className="mt-3 text-muted-foreground">Try another search or browse the whole menu.</p><button onClick={() => { setQuery(''); setCategory('All'); }} className="mt-6 text-sm font-bold text-primary underline underline-offset-4" data-testid="button-clear-search">Clear filters</button></div>}</main>;
+  return <main className="section-wrap py-10 md:py-16">
+    <div className="reveal flex flex-col justify-between gap-5 border-b border-border pb-8 md:flex-row md:items-end">
+      <div><p className="eyebrow mb-3">The menu</p><h1 className="font-display text-5xl leading-none text-primary sm:text-7xl">Find your<br/><em className="font-normal text-foreground">sweet spot.</em></h1></div>
+      <p className="max-w-sm text-sm leading-6 text-muted-foreground md:text-right">Small-batch cakes, tarts, and tiny treats made for birthdays, beginnings, and everything worth celebrating.</p>
+    </div>
+    <div className="mt-8 grid gap-8 lg:grid-cols-[190px_1fr] lg:gap-10">
+      <aside className="h-fit rounded-2xl border border-border bg-background p-4 shadow-[0_8px_24px_hsl(var(--brand-ink)/.04)] lg:sticky lg:top-24" aria-label="Product categories">
+        <p className="px-2 pb-3 text-[10px] font-bold uppercase tracking-[.2em] text-muted-foreground">Categories</p>
+        <div className="flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
+          {categories.map(c => {
+            const count = c === 'All' ? products.length : products.filter(p => p.category === c).length;
+            return <button key={c} onClick={() => setCategory(c)} className={cn('flex min-w-max items-center justify-between gap-6 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition-all lg:w-full', category === c ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-secondary/70 hover:text-primary')} data-testid={`button-filter-${c.toLowerCase().replaceAll(' ', '-')}`}><span>{c === 'All' ? 'All products' : c}</span><span className={cn('text-[10px]', category === c ? 'text-primary-foreground/70' : 'text-muted-foreground/70')}>{count}</span></button>;
+          })}
+        </div>
+      </aside>
+      <section className="min-w-0">
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-secondary/60 px-3.5 py-2 text-xs font-bold text-foreground"><span className="h-1.5 w-1.5 rounded-full bg-primary"/>{category === 'All' ? 'All products' : category}<span className="text-muted-foreground">· {filtered.length}</span></div>
+          <label className="flex w-full items-center gap-3 rounded-full border border-border bg-background px-4 py-2.5 shadow-sm transition-colors focus-within:border-primary sm:w-56"><Search size={16} className="shrink-0 text-muted-foreground"/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search cakes" className="w-full bg-transparent text-sm outline-none" data-testid="input-search-menu"/></label>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">{filtered.map(p => <MenuProductCard key={p.id} product={p} onAdd={onAdd}/>)}</div>
+        {filtered.length === 0 && <div className="rounded-2xl border border-dashed border-border py-28 text-center"><CakeSlice className="mx-auto mb-5 text-primary/50" size={35}/><h2 className="font-display text-3xl">Nothing in that little corner.</h2><p className="mt-3 text-muted-foreground">Try another search or browse the whole menu.</p><button onClick={() => { setQuery(''); setCategory('All'); }} className="mt-6 text-sm font-bold text-primary underline underline-offset-4" data-testid="button-clear-search">Clear filters</button></div>}
+      </section>
+    </div>
+  </main>;
 }
 
 function ProductPage({ onAdd }: { onAdd: (p: Product, size?: string, note?: string) => void }) {
