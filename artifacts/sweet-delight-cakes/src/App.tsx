@@ -60,7 +60,7 @@ function Header({ count }: { count: number }) {
   return <header className="sticky top-0 z-40 border-b border-[hsl(var(--brand-ink)/.12)] bg-[hsl(var(--brand-pink))] shadow-[0_2px_18px_hsl(var(--brand-ink)/.08)]">
     <div className="section-wrap flex h-[76px] items-center justify-between">
       <Link href="/" className="group flex items-center gap-3" data-testid="link-logo">
-        <img src="/sweet-delight-logo.png" alt="Frost Craft — Delight in every bite" className="h-auto w-[148px] object-contain transition-transform duration-300 group-hover:scale-[1.02] sm:w-[164px]" />
+        <img src="/sweet-delight-header-logo.png" alt="Frost Craft — Delight in every bite" className="block h-auto w-[164px] object-contain transition-transform duration-300 group-hover:scale-[1.02] sm:w-[184px]" />
       </Link>
       <nav className="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Main navigation">
         {['Menu', 'Our story', 'Contact'].map((item) => <Link key={item} href={item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact'} className={cn('link-underline text-[hsl(var(--brand-ink)/.75)] transition-colors hover:text-[hsl(var(--brand-ink))]', location === (item === 'Menu' ? '/menu' : item === 'Our story' ? '/about' : '/contact') && 'text-[hsl(var(--brand-ink))]')} data-testid={`link-nav-${item.toLowerCase().replace(' ', '-')}`}>{item}</Link>)}
